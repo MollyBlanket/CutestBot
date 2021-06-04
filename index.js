@@ -21,16 +21,16 @@ bot.on('message', async (ctx) => {
     let message =  ctx.message.text;
     if(message) {message = ctx.message.text.split(/\s+/g)} else return;
 
-    if(message[0].toLowerCase() == 'help'){
+    if(['help', '/help', '@/helpcutestdogebot'].includes(message[0].toLowerCase())){
         return await  help(bot, ctx);
     };
-    if(message[0].toLowerCase() == 'messages'){
+    if(['messages', '/messages', '/messages@cutestdogebot'].includes(message[0].toLowerCase())){
         return await messages(ctx); 
     };
-    if(message[0].toLowerCase() == 'leaderboard'){
+    if(['leaderboard', '/leaderboard', '/leaderboard@cutestdogebot'].includes(message[0].toLowerCase())){
         return await leaderboard(ctx);
     };
-    if(message[0].toLowerCase() == 'daily-leaders'){
+    if(['daily-leaders', '/daily-leaders', '/daily-leaders@cutestdogebot'].includes(message[0].toLowerCase())){
         return await daily_leaders(ctx);
     };
     await main(ctx);
