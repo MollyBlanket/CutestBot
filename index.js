@@ -16,24 +16,21 @@ bot.on('new_chat_members', (ctx)=>{
 
 bot.on('message', async (ctx) => {
     if(ctx.chat.type == 'private') return;
-    await main(ctx);
 
     let message =  ctx.message.text;
     if(message) {message = ctx.message.text.split(/\s+/g)} else return;
 
     if(['help', '/help', '@/helpcutestdogebot'].includes(message[0].toLowerCase())){
-        return await  help(bot, ctx);
+        help(bot, ctx);
+    } else if(['messages', '/messages', '/messages@cutestdogebot'].includes(message[0].toLowerCase())){
+        messages(ctx); 
+    } else if(['leaderboard', '/leaderboard', '/leaderboard@cutestdogebot'].includes(message[0].toLowerCase())){
+        leaderboard(ctx);
+    } else if(['daily-leaders', '/daily', '/daily@cutestdogebot'].includes(message[0].toLowerCase())){
+        daily_leaders(ctx);
+    } else {
+        main(ctx);
     };
-    if(['messages', '/messages', '/messages@cutestdogebot'].includes(message[0].toLowerCase())){
-        return await messages(ctx); 
-    };
-    if(['leaderboard', '/leaderboard', '/leaderboard@cutestdogebot'].includes(message[0].toLowerCase())){
-        return await leaderboard(ctx);
-    };
-    if(['daily-leaders', '/daily-leaders', '/daily-leaders@cutestdogebot'].includes(message[0].toLowerCase())){
-        return await daily_leaders(ctx);
-    };
-    await main(ctx);
 
 });
 bot.on('callback_query', (query)=>{
