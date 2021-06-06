@@ -12,9 +12,9 @@ module.exports = async (ctx) => {
         file[chat_id] = {
             [member_id]: {
                 name: `${ctx.from.first_name} ${ctx.from.last_name ? ctx.from.last_name : ""}`,
-                whole_activity: 1,
+                whole_activity: 0,
                 daily_activity: {
-                    [time]: 1
+                    [time]: 0
                 }
             }
         };
@@ -29,9 +29,9 @@ module.exports = async (ctx) => {
     if(!(member_id in file[chat_id])){
         file[chat_id][member_id] ={
             name: `${ctx.from.first_name} ${ctx.from.last_name ? ctx.from.last_name : ""}`,
-            whole_activity: 1,
+            whole_activity: 0,
             daily_activity: {
-                [time]: 1
+                [time]: 0
             }
         };
     
@@ -47,11 +47,6 @@ module.exports = async (ctx) => {
 
     fs.writeFile(fileName, JSON.stringify(file, null, 2), function writeJSON(err) {
         if (err) return console.log(err);
-    });
-
-    
-    
-    
-    
+    });  
 };
 

@@ -18,7 +18,9 @@ module.exports = async (ctx) => {
 
     let leaderboard = '';
     for(let i=0; i<messages.length; i++){
-        leaderboard += `${i+1}. ${messages[i][1]} - ${messages[i][0]} messages\n`
+        if(messages[i][0]>1){
+            leaderboard += `${i+1}. ${messages[i][1]} - ${messages[i][0]} messages\n`
+        }
     };
     ctx.reply(`Whole mesagges today\n${leaderboard}`)
 };  
