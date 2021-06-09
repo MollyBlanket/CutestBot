@@ -9,31 +9,53 @@ const messages = require('./functions/messages.js');
 const leaderboard = require('./functions/leaderboard.js')
 const daily_leaders = require('./functions/daily-leaders.js')
 ///
+let last_request = Date.now();
+///
 
 bot.on('new_chat_members', (ctx)=>{
-    ctx.reply(`Привет, ${ctx.from.first_name}. Тебя приветствует наше небольшое уютное сообщество. \nЧто бы узнать все функции бота напиши слово "help"`)
+    ctx.reply(`Привет, ${ctx.from.first_name}. Тебя приветствует наше небольшое уютное сообщество. \nЧто бы узнать все функции бота напиши слово "help"`);
+    
 })
 
 bot.on('message', async (ctx) => {
+    let date_now = Date.now();
+
+    if(date_now-last_request<1e3) return last_request=Date.now();
+
+    last_request=Date.now();
+
     if(ctx.chat.type == 'private') return;
 
     let message =  ctx.message.text;
-    if(message) {message = ctx.message.text.split(/\s+/g)} else return;
+
+    if(message) 
+        {message = ctx.message.text.split(/\s+/g)} 
+    else 
+        return;
 
     if(['help', '/help', '@/helpcutestdogebot'].includes(message[0].toLowerCase())){
         help(bot, ctx);
-    } else if(['messages', '/messages', '/messages@cutestdogebot'].includes(message[0].toLowerCase())){
+    }else if(['messages', '/messages', '/messages@cutestdogebot'].includes(message[0].toLowerCase())){
         messages(ctx); 
-    } else if(['leaderboard', '/leaderboard', '/leaderboard@cutestdogebot'].includes(message[0].toLowerCase())){
+    }else if(['leaderboard', '/leaderboard', '/leaderboard@cutestdogebot'].includes(message[0].toLowerCase())){
         leaderboard(ctx);
-    } else if(['daily-leaders', '/daily', '/daily@cutestdogebot'].includes(message[0].toLowerCase())){
+    }else if(['daily-leaders', '/daily', '/daily@cutestdogebot'].includes(message[0].toLowerCase())){
         daily_leaders(ctx);
-    } else {
+    }else{
         main(ctx);
     };
 
 });
+
+
 bot.on('callback_query', (query)=>{
+
+    let date_now = Date.now();
+
+    if(date_now-last_request<1e3) return last_request=Date.now();
+
+    last_request=Date.now();
+
     if(query.update.callback_query.data == 'messages'){
         messages(query);  
     };
